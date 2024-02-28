@@ -138,6 +138,10 @@ pub const KPerf = struct {
 };
 
 test "kperf - run with sudo" {
+    if (!@import("builtin").os.tag.isDarwin()) {
+        return error.SkipZigTest;
+    }
+
     const k = try KPerf.instance();
     std.debug.print("COUNTER {any}\n", .{try k.get_counter()});
 }
