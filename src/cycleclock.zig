@@ -21,15 +21,15 @@ inline fn now_x64_64() u64 {
     var low: u64 = undefined;
     var high: u64 = undefined;
     asm volatile ("rdtsc"
-        : [low] "=r" (low),
-          [high] "=r" (high),
+        : [low] "={eax}" (low),
+          [high] "={edx}" (high),
     );
     return (high << 32) | low;
 }
 
 test "simple test" {
-    const time = now();
-    std.debug.print("Cycle Time: {}!\n", .{time});
+    std.debug.print("Cycle Time: {}!\n", .{now()});
+    std.debug.print("Cycle Time: {}!\n", .{now()});
 }
 
 comptime {
